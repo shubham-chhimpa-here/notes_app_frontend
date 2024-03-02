@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
-export default function Navbar() {
+export default function Navbar({ data }) {
+
     return <>
         <header className="p-4  text-gray-800">
             <div className="container flex justify-between h-16 mx-auto">
@@ -12,23 +14,26 @@ export default function Navbar() {
                 </Link>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
 
-                <ul className="items-stretch hidden space-x-3 lg:flex">
-                    <li className="flex">
-                        <Link to={'/contact'} className="flex items-center px-4 -mb-1 border-b-2 border-transparent 
+                    <ul className="items-stretch hidden space-x-3 lg:flex">
+                        <li className="flex">
+                            <Link to={'/contact'} className="flex items-center px-4 -mb-1 border-transparent 
                         hover:text-violet-600 hover:border-violet-600">Contact</Link>
-                    </li>
-                    <li className="flex">
-                    <Link to={'/help'} className="flex items-center px-4 -mb-1 border-b-2 border-transparent 
+                        </li>
+                        <li className="flex">
+                            <Link to={'/help'} className="flex items-center px-4 -mb-1 border-transparent 
                         hover:text-violet-600 hover:border-violet-600">Help</Link>
-                    </li>
-                    <li className="flex">
-                    <Link to={'/blog'} className="flex items-center px-4 -mb-1 border-b-2 border-transparent 
+                        </li>
+                        <li className="flex">
+                            <Link to={'/blog'} className="flex items-center px-4 -mb-1 border-transparent 
                         hover:text-violet-600 hover:border-violet-600">Blog</Link>
-                    </li>
-                   
-                </ul>
-                    <Link to={'/signin'} className="self-center px-8 py-3 rounded">Sign in</Link>
-                    <Link to={'/signup'} className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50">Sign up</Link>
+                        </li>
+
+                    </ul>
+
+
+
+                   <PrivateRoute data = {data}/>
+
                 </div>
                 <button className="p-4 lg:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 text-gray-800">

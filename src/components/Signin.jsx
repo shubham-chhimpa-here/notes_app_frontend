@@ -1,32 +1,68 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Signin() {
+export default function Signin({data}) {
+    const navigate = useNavigate();
+    const {isLogin, setIslogin} = data;
+
+    const [state, setState] = useState({ email: "", password: "" });
+    const handleChange = (e) => {
+        setState({ ...state, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!state.email || !state.password || !state.email.includes('@')) {
+            alert('Please enter valid email and password')
+            return
+        }
+        else {
+
+        }
+        fetch('http://localhost:8080/user/login', {
+            method: 'POST',
+            body: JSON.stringify(state),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                document.cookie = `token=Bearer ${res.token}`
+                setIslogin(true)
+            }
+            )
+            .catch(err =>
+                console.log(err))
+        // alert(JSON.stringify(state))
+    }
+
+    if(isLogin) return navigate('/')
+
     return <>
         <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10  text-gray-800 m-auto">
             <div className="mb-8 text-center">
                 <h1 className="my-3 text-4xl font-bold">Sign in</h1>
                 <p className="text-sm text-gray-600">Sign in to access your account</p>
             </div>
-            <form novalidate="" action="" className="space-y-12">
+            <form className="space-y-12">
                 <div className="space-y-4">
                     <div>
                         <label for="email" className="block mb-2 text-sm">Email address</label>
-                        <input type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+                        <input onChange={handleChange} type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
                     </div>
                     <div>
                         <div className="flex justify-between mb-2">
                             <label for="password" className="text-sm">Password</label>
                             {/* <a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-600">Forgot password?</a> */}
                         </div>
-                        <input type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+                        <input onChange={handleChange} type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" required />
                     </div>
                 </div>
                 <div className="space-y-2">
                     <div>
-                        <button type="button" className="w-full px-8 py-3 font-semibold rounded-md bg-violet-600 text-gray-50"
-                        onClick={() => {
-                            alert('button click')
-                        }}
+                        <button type="submit" className="active:bg-violet-500 w-full px-8 py-3 font-semibold rounded-md bg-violet-600 text-gray-50"
+                            onClick={handleSubmit}
                         >Sign in</button>
                     </div>
                     <p className="px-6 text-sm text-center text-gray-600">Don't have an account yet?
