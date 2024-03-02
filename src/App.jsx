@@ -20,7 +20,7 @@ function App() {
       .then(res => res.json())
       .then(res => {
         if(res.login) {
-          console.log(res.data)
+          
           setIslogin(true)
           setNotes(res.data)
         }
@@ -32,12 +32,12 @@ function App() {
   }
   useEffect(() => {
     getData()
-  }, [])
+  }, [isLogin])
 
   return (
     <>
       <Navbar data={{ isLogin }} />
-      <AllRoutes data={{ isLogin, setIslogin }} />
+      <AllRoutes data={{ isLogin, setIslogin, notes, setNotes }} />
     </>
   )
 }

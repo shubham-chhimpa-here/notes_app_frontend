@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Signin({data}) {
+export default function Signin({ data }) {
     const navigate = useNavigate();
-    const {isLogin, setIslogin} = data;
+    const { isLogin, setIslogin } = data;
 
     const [state, setState] = useState({ email: "", password: "" });
     const handleChange = (e) => {
@@ -18,26 +18,29 @@ export default function Signin({data}) {
         }
         else {
 
+
+            fetch('http://localhost:8080/user/login', {
+                method: 'POST',
+                body: JSON.stringify(state),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(res => {
+                    document.cookie = `token=Bearer ${res.token}`
+                    setIslogin(true)
+                }
+                )
+                .catch(err =>
+                    console.log(err))
+            // alert(JSON.stringify(state))
         }
-        fetch('http://localhost:8080/user/login', {
-            method: 'POST',
-            body: JSON.stringify(state),
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(res => {
-                document.cookie = `token=Bearer ${res.token}`
-                setIslogin(true)
-            }
-            )
-            .catch(err =>
-                console.log(err))
-        // alert(JSON.stringify(state))
     }
 
-    if(isLogin) return navigate('/')
+    useEffect(() => {
+        if (isLogin) return navigate('/')
+    }, [isLogin])
 
     return <>
         <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10  text-gray-800 m-auto">
@@ -48,12 +51,12 @@ export default function Signin({data}) {
             <form className="space-y-12">
                 <div className="space-y-4">
                     <div>
-                        <label for="email" className="block mb-2 text-sm">Email address</label>
+                        <label className="block mb-2 text-sm">Email address</label>
                         <input onChange={handleChange} type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
                     </div>
                     <div>
                         <div className="flex justify-between mb-2">
-                            <label for="password" className="text-sm">Password</label>
+                            <label  className="text-sm">Password</label>
                             {/* <a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-600">Forgot password?</a> */}
                         </div>
                         <input onChange={handleChange} type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" required />

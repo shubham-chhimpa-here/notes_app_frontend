@@ -4,7 +4,7 @@ import Notes from "../components/Notes";
 export default function Homepage({ data }) {
     const { isLogin } = data;
 
-    if (isLogin) return <Notes />
+    if (isLogin) return <Notes data={data} />
 
     return <>
         <CalltoActionHome />

@@ -15,7 +15,7 @@ export default function AllRoutes({data}) {
         <Route path="/signin" element={ <Signin data = {data}/>} />
         <Route path="/signup" element={ <Signup data = {data}/>}  />
         <Route path="/contact" element={ <Contact />} />
-        <Route path="/notes/add" element={ <NotesForm />} />
+        <Route path="/notes/add" element={ <NotesForm data ={data}/>} />
        
         <Route path="/:error" element={ <ErrorComponent />} />
  

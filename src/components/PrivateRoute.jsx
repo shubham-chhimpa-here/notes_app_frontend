@@ -1,13 +1,22 @@
 import { Link } from "react-router-dom";
 
-export default function PrivateRoute({data}) {
-    const {isLogin} = data;
+export default function PrivateRoute({ data }) {
+    const { isLogin, setLogin } = data;
+
+    const handleClick = () => {
+        document.cookie = 'token=null';
+
+        setLogin(false)
+    }
 
 
-
-    if(isLogin) {
-        return   <Link to={'/notes/add'} className="flex items-center px-4 -mb-1  border-transparent 
+    if (isLogin) {
+        return <>
+            <Link to={'/notes/add'} className="flex items-center px-4 -mb-1  border-transparent 
         hover:text-violet-600 hover:border-violet-600">Write</Link>
+            <Link to={'/'} onClick={handleClick} className="flex items-center px-4 -mb-1  border-transparent 
+        hover:text-violet-600 hover:border-violet-600">Logout</Link>
+        </>
     }
 
     return <>
