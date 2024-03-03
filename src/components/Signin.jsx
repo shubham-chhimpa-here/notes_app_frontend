@@ -28,8 +28,11 @@ export default function Signin({ data }) {
             })
                 .then(res => res.json())
                 .then(res => {
-                    document.cookie = `token=Bearer ${res.token}`
-                    setIslogin(true)
+                    if (res.status) {
+                        document.cookie = `token=Bearer ${res.token}`
+                        setIslogin(true)
+
+                    }
                 }
                 )
                 .catch(err =>
@@ -56,7 +59,7 @@ export default function Signin({ data }) {
                     </div>
                     <div>
                         <div className="flex justify-between mb-2">
-                            <label  className="text-sm">Password</label>
+                            <label className="text-sm">Password</label>
                             {/* <a rel="noopener noreferrer" href="#" className="text-xs hover:underline text-gray-600">Forgot password?</a> */}
                         </div>
                         <input onChange={handleChange} type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" required />
