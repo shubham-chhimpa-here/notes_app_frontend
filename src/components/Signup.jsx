@@ -11,7 +11,7 @@ export default function Signup({ data }) {
     }
 
     const handleSubmit = async () => {
-        fetch('http://localhost:8080/user/register', {
+        fetch(`${import.meta.env.VITE_BASE_URL}/user/register`, {
             method: 'POST',
             body: JSON.stringify(state),
             headers: {

@@ -13,7 +13,7 @@ export default function NotesForm({data}) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		fetch('http://localhost:8080/blog/create', {
+		fetch(`${import.meta.env.VITE_BASE_URL}/blog/create`, {
 			method: 'POST',
 			body: JSON.stringify(state),
 			headers: {

@@ -19,7 +19,7 @@ export default function Signin({ data }) {
         else {
 
 
-            fetch('http://localhost:8080/user/login', {
+            fetch(`${import.meta.env.VITE_BASE_URL}/user/login`, {
                 method: 'POST',
                 body: JSON.stringify(state),
                 headers: {

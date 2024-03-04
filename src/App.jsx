@@ -10,7 +10,7 @@ function App() {
 
   async function getData() {
     // console.log(document.cookie.split('token=')[1])
-    fetch('http://localhost:8080/blog/', {
+    fetch(`${import.meta.env.VITE_BASE_URL}/blog/`, {
       method: 'GET',
       headers: {
         'Authorization': document.cookie.split('token=')[1]
