@@ -5,6 +5,7 @@ import Signup from "./Signup";
 import Contact from "./Contact";
 import ErrorComponent from "./ErrorComponent";
 import NotesForm from "./NotesForm";
+import Notespage from "../pages/Notespage";
 
 export default function AllRoutes({data}) {
     
@@ -16,6 +17,7 @@ export default function AllRoutes({data}) {
         <Route path="/signup" element={ <Signup data = {data}/>}  />
         <Route path="/contact" element={ <Contact />} />
         <Route path="/notes/add" element={ <NotesForm data ={data}/>} />
+        <Route path="/notes/:notesId" element={ <Notespage data ={data}/>} />
        
         <Route path="/:error" element={ <ErrorComponent />} />
  
