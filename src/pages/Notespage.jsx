@@ -22,7 +22,7 @@ export default function Notespage({ data }) {
 			.then(res => res.json())
 			.then(res => {
 
-				console.log(res)
+	
 				if (res.data) {					
 					setState(res.data)
 				}
@@ -36,12 +36,12 @@ export default function Notespage({ data }) {
 		getData(notesId)
 	}, [])
 
-	const handleClick = (type) => {
+	const handleClick = (type, notesId) => {
 		if(type == 'update') {
 			return navigate('/')
 		}
 		else {
-			fetch(`${import.meta.env.VITE_BASE_URL}/blog/delete/${blogId}`, {
+			fetch(`${import.meta.env.VITE_BASE_URL}/blog/delete/${notesId}`, {
 				method: 'DELETE',
 				headers: {
 					'content-type': 'application/json',
@@ -50,7 +50,9 @@ export default function Notespage({ data }) {
 			})
 				.then(res => res.json())
 				.then(res => {
-					setNotes([...notes, res.response])
+					const newArray = notes.filter(note => note._id != notesId)
+					setNotes(newArray)
+					
 				})
 	
 				.catch(err => {
@@ -87,10 +89,10 @@ export default function Notespage({ data }) {
 
 				<div className="flex justify-between gap-4">
 					<button onClick={() => {
-						handleClick('update')
+						handleClick('update', notesId)
 					}} className=" px-4 py-2 w-full font-bold rounded shadow focus:outline-none focus:ring hover:ring focus:ri bg-violet-600 focus:ri hover:ri text-gray-50">Edit</button>
 					<button  onClick={() => {
-						handleClick('delete')
+						handleClick('delete', notesId)
 					}} className=" px-4 py-2 w-full font-bold rounded shadow focus:outline-none focus:ring hover:ring focus:ri bg-red-500 focus:ri hover:ri text-gray-50">Delete</button>
 				</div>
 				<div>
